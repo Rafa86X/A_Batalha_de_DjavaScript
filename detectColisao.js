@@ -10,6 +10,9 @@ let vidaEnimigo = 10000
 let tempoNovoDanoE = 0
 let travaDanoE = false
 
+const gettravaDanoE = ()=>{
+    return travaDanoE
+}
 const getVidaHeroi = ()=>{
     return vidaHeroi
 }
@@ -117,5 +120,6 @@ setInterval(()=>{
 
 export default {
     getVidaHeroi:getVidaHeroi,
-    getVidaEnimigo:getVidaEnimigo
+    getVidaEnimigo:getVidaEnimigo,
+    gettravaDanoE:gettravaDanoE
 }

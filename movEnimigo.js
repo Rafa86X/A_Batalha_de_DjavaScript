@@ -1,4 +1,8 @@
 import controlesPersonagem from "./controlesPersonagem.js"
+
+import detectColisao from "./detectColisao.js"
+
+
 const enimigo = document.getElementById("enimigo")
 
 
@@ -23,26 +27,26 @@ let ativado=false
 let dano = false
 let velocidade
 
-setInterval(()=>{
-
-    //console.log(getDano()[5]);
-
+const tomouDano =()=>{
     if(getDano()[5] == "5"){
         dano= true
     }
 
     if(dano){
+
+        velocidade = (alvoX - posiX < 80) ? velocidade = 1 : velocidade = 2
         alvoX = 700
         alvoY = 150
-        velocidade = 0
+
     }else{
         alvoX = controlesPersonagem.getX()
         alvoY = controlesPersonagem.getY()
-        velocidade = 0
+        velocidade = 1
     }
-    posiX = getX()
-    posiY = getY()
 
+}
+
+const mov = () =>{
     if(ativado){
         if(alvoX < posiX){
             novaPosição = posiX - velocidade
@@ -61,8 +65,15 @@ setInterval(()=>{
             enimigo.style.bottom = novaPosição +"px"
         }  
     }
+}
 
-    
+setInterval(()=>{
+   
+    posiX = getX()
+    posiY = getY()
+    mov()
+    tomouDano()
+  
 },10);
 
 
