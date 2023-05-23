@@ -24,15 +24,43 @@ let alvoY
 let posiX
 let posiY
 let ativado=false
-let dano = false
+let corrida = false
 let velocidade
+let tempoRecomeca = 0
+let chegouNopontoInicio = false
+
+const recomeca = ()=>{
+
+   console.log(tempoRecomeca, corrida);
+    if((tempoRecomeca<500)){
+        tempoRecomeca = tempoRecomeca + 1       
+        
+    }
+    if(tempoRecomeca>=500){
+        ativado = true
+    }
+    else{
+        ativado = false
+    }
+        
+    if((posiX == 700 )&&(posiY==150)&&(corrida==true)){
+            corrida=false
+            tempoRecomeca = 0
+            console.log("tempoRecomeca, corrida")
+            chegouNopontoInicio = true
+    }
+                     
+
+}
+
+
 
 const tomouDano =()=>{
     if(getDano()[5] == "5"){
-        dano= true
+        corrida= true
     }
 
-    if(dano){
+    if(corrida){
 
         velocidade = (alvoX - posiX < 80) ? velocidade = 1 : velocidade = 2
         alvoX = 700
@@ -45,6 +73,8 @@ const tomouDano =()=>{
     }
 
 }
+
+
 
 const mov = () =>{
     if(ativado){
@@ -73,6 +103,7 @@ setInterval(()=>{
     posiY = getY()
     mov()
     tomouDano()
+    recomeca()
   
 },10);
 
@@ -85,7 +116,7 @@ document.addEventListener('keydown', function(e) {
            
     case "p":
         ativado = true
-        dano=false
+        corrida=false
         break;  
      }
 });
