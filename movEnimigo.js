@@ -34,11 +34,11 @@ setInterval(()=>{
     if(dano){
         alvoX = 700
         alvoY = 150
-        velocidade = 2
+        velocidade = 0
     }else{
         alvoX = controlesPersonagem.getX()
         alvoY = controlesPersonagem.getY()
-        velocidade = 1
+        velocidade = 0
     }
     posiX = getX()
     posiY = getY()
