@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    padding: 0;
+    overflow: hidden
+}
+
+.tela{
+    margin-top: 50px;
+    margin-left: 20px;
+    width: 800px;
+    height: 500px;
+    border: 2px solid purple;
+    position: relative;
+}
+
+.infoTela{
+    padding: 20px;
+    width: calc(100% - 40px);
+    display: flex;
+    justify-content: space-between;
+}
+.placar{
+   
+    display: flex;  
+}
+
+.itemPlacar{
+    margin-left: 5px;
+}
+
+#campoAtaqueHeroi{
+    /*visibility: hidden;*/
+    position: absolute;
+    display: flex;
+    align-items: end;
+    width: 120px;
+    height: 50px;
+    border: 1px solid rgb(9, 242, 234);;
+    bottom: 50px;
+    left: 60px;
+}
+
+#heoizinho{
+    position: absolute;
+    display: flex;
+    align-items: end;
+    width: 40px;
+    height: 80px;
+    border: 1px solid rgb(10, 18, 169);;
+    bottom: 50px;
+    left: 100px;
+}
+
+.dano{
+    width: 50px;
+    height: 50px;
+    background-color: rgb(88, 91, 6);
+}
+
+.cortinaFogo{
+    position: absolute;
+    display: flex;
+    align-items: end;
+    width: 40px;
+    height: 350px;
+    background-color: rgb(248, 87, 0);
+    bottom: 0px;
+    left: 630px;
+}
+.blocoDano{
+
+    /*visibility: hidden;*/
+
+    position: absolute;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: brown;
+    bottom: 100px;
+    left: 300px;
+
+}
+
+#enimigo{
+    position: absolute;
+    display: flex;
+    align-items: end;
+    width: 40px;
+    height: 80px;
+    border: 1px solid rgb(169, 10, 10);;
+    bottom: 150px;
+    left: 700px;
+
+}
