@@ -46,16 +46,13 @@
     align-items: end;
     width: 40px;
     height: 80px;
-    border: 1px solid rgb(10, 18, 169);;
+    border: 1px solid rgb(10, 18, 169);
+    background-color: rgb(0, 198, 248);
     bottom: 50px;
     left: 100px;
 }
 
-.dano{
-    width: 50px;
-    height: 50px;
-    background-color: rgb(88, 91, 6);
-}
+
 
 .cortinaFogo{
     position: absolute;
@@ -87,7 +84,8 @@
     align-items: end;
     width: 40px;
     height: 80px;
-    border: 1px solid rgb(169, 10, 10);;
+    border: 1px solid rgb(169, 10, 10);
+    background-color: rgb(248, 99, 0);
     bottom: 150px;
     left: 720px;
 

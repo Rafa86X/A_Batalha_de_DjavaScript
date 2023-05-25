@@ -1,8 +1,5 @@
 import controlesPersonagem from "./controlesPersonagem.js"
 
-import detectColisao from "./detectColisao.js"
-
-
 const enimigo = document.getElementById("enimigo")
 
 
@@ -27,28 +24,32 @@ let ativado=false
 let corrida = false
 let velocidade
 let tempoRecomeca = 0
-let chegouNopontoInicio = false
+
+let pause = false
 
 const recomeca = ()=>{
 
-   console.log(tempoRecomeca, corrida);
-    if((tempoRecomeca<500)){
-        tempoRecomeca = tempoRecomeca + 1       
-        
+
+    if(pause){
+        if((tempoRecomeca<500)){
+            tempoRecomeca = tempoRecomeca + 1       
+            
+        }
+        if(tempoRecomeca>=500){
+            ativado = true
+        }
+        else{
+            ativado = false
+        }
+            
+        if((posiX == 700 )&&(posiY==150)&&(corrida==true)){
+                corrida=false
+                tempoRecomeca = 0
+                console.log("tempoRecomeca, corrida")
+                chegouNopontoInicio = true
+        }
     }
-    if(tempoRecomeca>=500){
-        ativado = true
-    }
-    else{
-        ativado = false
-    }
-        
-    if((posiX == 700 )&&(posiY==150)&&(corrida==true)){
-            corrida=false
-            tempoRecomeca = 0
-            console.log("tempoRecomeca, corrida")
-            chegouNopontoInicio = true
-    }
+
                      
 
 }
@@ -115,8 +116,11 @@ document.addEventListener('keydown', function(e) {
     
            
     case "p":
-        ativado = true
-        corrida=false
+        pause = true
+        break;  
+
+        case "i":
+        pause = false
         break;  
      }
 });
