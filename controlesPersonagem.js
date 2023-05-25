@@ -40,22 +40,22 @@ setInterval(()=>{
 
 
     if ((funcao == 'l')&&(heroizinhoPositionX>1)){      
-      novaPosição = heroizinhoPositionX - 3
+      novaPosição = heroizinhoPositionX - 2
       heroizinho.style.left = novaPosição +"px"
       campoAtq.style.left = (novaPosição - 40) +"px"
     }
     if ((funcao == 'r')&&(heroizinhoPositionX<600)){
-      novaPosição = heroizinhoPositionX + 3
+      novaPosição = heroizinhoPositionX + 2
       heroizinho.style.left = novaPosição +"px"
       campoAtq.style.left = (novaPosição - 40) +"px"
     }
     if ((funcao == 'u')&&(heroizinhoPositionY<269)){      
-      novaPosição = heroizinhoPositionY + 3
+      novaPosição = heroizinhoPositionY + 2
       heroizinho.style.bottom = novaPosição +"px"
       campoAtq.style.bottom = novaPosição +"px"
     }
     if ((funcao == 'd')&&(heroizinhoPositionY>5)){
-      novaPosição = heroizinhoPositionY - 3
+      novaPosição = heroizinhoPositionY - 2
       heroizinho.style.bottom = novaPosição +"px"
       campoAtq.style.bottom = novaPosição +"px"
     }

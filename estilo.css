@@ -41,13 +41,14 @@
 }
 
 #heoizinho{
+    background-image: url("./Gifs/PersonagemParado.gif");
+    background-repeat: no-repeat;
     position: absolute;
     display: flex;
     align-items: end;
-    width: 40px;
-    height: 80px;
+    width: 130px;
+    height: 120px;
     border: 1px solid rgb(10, 18, 169);
-    background-color: rgb(0, 198, 248);
     bottom: 50px;
     left: 100px;
 }
@@ -64,18 +65,39 @@
     bottom: 0px;
     left: 630px;
 }
+
+
 .blocoDano{
-
-    /*visibility: hidden;*/
-
-    position: absolute;
-    align-items: center;
     width: 60px;
     height: 60px;
-    background-color: brown;
-    bottom: 300px;
-    left: 750px;
+}
 
+.bl1{
+    position: absolute;
+    bottom: 270px;
+    left: 265px;
+    border: 1px solid rgb(169, 10, 10);
+}
+.bl2{
+    position: absolute;
+    bottom: 0px;
+    left: 355px;
+    border: 1px solid rgb(169, 10, 10);
+}
+
+.bl3{
+    position: absolute;
+    bottom: 140px;
+    left: 355px;
+    border: 1px solid rgb(169, 10, 10);
+}
+
+.figuraBlocoDano{
+    background-image: url("./Gifs/fogo01.gif");
+    position: absolute;
+    width: 65px;
+    height: 120px;
+    background-repeat: no-repeat;
 }
 
 #enimigo{

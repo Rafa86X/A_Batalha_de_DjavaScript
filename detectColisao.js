@@ -111,6 +111,12 @@ setInterval(()=>{
     blocoColisaoDano(controlesPersonagem.getX(),controlesPersonagem.getY(),
     blocosDano.getX_bloco1(),blocosDano.getY_bloco1())
 
+    blocoColisaoDano(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_bloco2(),blocosDano.getY_bloco2())
+
+    blocoColisaoDano(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_bloco3(),blocosDano.getY_bloco3())
+
     novoDanoNoHeroi()
     novoDanoNoEnimigo()
 
