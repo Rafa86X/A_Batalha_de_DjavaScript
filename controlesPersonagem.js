@@ -52,7 +52,8 @@ setInterval(()=>{
       heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParadoPorrete.gif)' : heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParado.gif)'
     }
 
-    if ((funcao == 'l')&&(heroizinhoPositionX>1)){      
+    if ((funcao == 'l')&&(heroizinhoPositionX>1)){  
+  
       novaPosição = heroizinhoPositionX - 2
       heroizinho.style.left = novaPosição +"px"
       heroizinho.style.transform = 'scaleX(-1)'

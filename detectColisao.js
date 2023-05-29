@@ -78,7 +78,7 @@ const contatoAtq = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
         {   
             movEnimigo.setDano(true)
             travaDanoE = true
-            //controlesPersonagem.settHeroiComPorrete(false)
+            
         }
     }  
 }

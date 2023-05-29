@@ -1,5 +1,6 @@
 const porrete = document.getElementById("porrete")
 
+let novaPosição
 const getXPorrete = () =>{
     return parseInt(window.getComputedStyle(porrete).left)
   }
@@ -13,10 +14,18 @@ const desaparecePorrete = ()=>{
     porrete.style.bottom = 1000 + 'px'
 }
 
+const reaparece = () =>{
+    porrete.style.visibility = 'visible'
+    novaPosição = Math.floor(Math.random() * 480);
+    porrete.style.left = novaPosição +"px"
+    novaPosição = Math.floor(Math.random() * 70);
+    porrete.style.bottom = novaPosição +"px"
+}
 
 
 
 export default {   getXPorrete:getXPorrete,
                    getYPorrete:getYPorrete,
-                   desaparecePorrete:desaparecePorrete
+                   desaparecePorrete:desaparecePorrete,
+                   reaparece:reaparece
                }

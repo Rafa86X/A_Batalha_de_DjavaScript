@@ -25,6 +25,10 @@ let pause = false
 let posiXini = 630
 let posiYini = 80
 
+let setPause = (set)=>{
+    pause = set
+}
+
 const recomeca = ()=>{
     if(pause){
         ativado = true
@@ -117,25 +121,9 @@ setInterval(()=>{
   
 },20);
 
-
-document.addEventListener('keydown', function(e) {
-    const key = e.key;
-    
-    switch (e.key) {
-    
-           
-    case "p":
-        pause = true
-        break;  
-
-        case "i":
-        pause = false
-        break;  
-     }
-});
-
 export default {
     getX:getX,
     getY:getY,
-    setDano:setDano
+    setDano:setDano,
+    setPause:setPause
 }
