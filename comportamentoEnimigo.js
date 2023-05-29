@@ -15,6 +15,22 @@ let fugindo = false
 let pause = false
 let posiXini = 630
 let posiYini = 80
+let velo_setada = 1
+let bloqueadoPeloControlador = false
+
+const getPosicaoInicial = () =>{
+   return ((getX()==posiX)&&(getY()==posiYini)) ? true : false
+}
+
+const liberaNovoDanoEnimigo = (set)=>{
+    bloqueadoPeloControlador = set
+}
+const getAconteceuDano = () =>{
+    return bloqueadoPeloControlador
+}
+const setVelocidade = (set) =>{
+    velo_setada = set
+}
 
 const getVidaEnimigo = ()=>{
     return vidaEnimigo
@@ -35,22 +51,26 @@ let setPause = (set)=>{
 
 const novoDanoNoEnimigo = ()=>{
 
-    if((tempoNovoDanoE==0)&&(travaDanoE)){
-        vidaEnimigo = vidaEnimigo - 10
-    }
-    if(travaDanoE){
-            if(tempoNovoDanoE<80){
-                tempoNovoDanoE++
-                ((tempoNovoDanoE % 5 === 0)||(tempoNovoDanoE % 2 === 0)) ? enimigo.style.visibility = 'hidden': enimigo.style.visibility = 'visible';
-                tempoNovoDanoE > 100 ? tempoNovoDanoE = 0: tempoNovoDanoE           
+    if(!bloqueadoPeloControlador){
+        if((tempoNovoDanoE==0)&&(travaDanoE)){
+            vidaEnimigo = vidaEnimigo - 10
+        }
+        if(travaDanoE){
+                if(tempoNovoDanoE<80){
+                    tempoNovoDanoE++
+                    ((tempoNovoDanoE % 5 === 0)||(tempoNovoDanoE % 2 === 0)) ? enimigo.style.visibility = 'hidden': enimigo.style.visibility = 'visible';
+                    tempoNovoDanoE > 100 ? tempoNovoDanoE = 0: tempoNovoDanoE           
+                }
+                
+            else{
+                tempoNovoDanoE = 0
+                travaDanoE = false
+                enimigo.style.visibility = 'visible';
+                bloqueadoPeloControlador = true
             }
-            
-        else{
-            tempoNovoDanoE = 0
-            travaDanoE = false
-            enimigo.style.visibility = 'visible';
         }
     }
+
 }
 
 const recomeca = ()=>{
@@ -72,14 +92,14 @@ const tomouDano =()=>{
     }
 
     if(fugindo){
-        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = 3
+        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = velo_setada +3
         alvoX = posiXini
         alvoY = posiYini
 
     }else{
         alvoX = controlesPersonagem.getX()
         alvoY = controlesPersonagem.getY()
-        velocidade = 1
+        velocidade = velo_setada
     }
 
 }
@@ -151,5 +171,9 @@ export default {
     getX:getX,
     getY:getY,
     setDano:setDano,
-    setPause:setPause
+    setPause:setPause,
+    setVelocidade:setVelocidade,
+    liberaNovoDanoEnimigo:liberaNovoDanoEnimigo,
+    getAconteceuDano:getAconteceuDano,
+    getPosicaoInicial:getPosicaoInicial
 }
