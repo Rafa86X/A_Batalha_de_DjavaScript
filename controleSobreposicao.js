@@ -16,7 +16,7 @@ const heroizinho = document.getElementById("heoizinho")
 
 const troca = ()=>{
 
-   if((controlesPersonagem.getY() + 50) < blocosDano.getY_bloco3()){
+   if((controlesPersonagem.getY()+10) < blocosDano.getY_bloco3()){
       principal2.insertBefore( figuraBlocoDano3,lista2[0] )
      }
      else{

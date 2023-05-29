@@ -1,5 +1,5 @@
 const heroizinho = document.getElementById("heoizinho")
-const campoAtq = document.getElementById("campoAtaqueHeroi")
+const porrete = document.getElementById("porrete")
 
 
 let heroizinhoPositionX
@@ -8,63 +8,80 @@ var funcao = ''
 let novaPosição
 let ataque = false
 let tempoAtq = 0
+let heroiComPorrete = false
 
+const gettHeroiComPorrete = ()=>{
+     return heroiComPorrete
+}
+
+const settHeroiComPorrete = (set)=>{
+     heroiComPorrete = set
+}
 const getX = () =>{
     return parseInt(window.getComputedStyle(heroizinho).left)
 }
 const getY = () =>{
     return parseInt(window.getComputedStyle(heroizinho).bottom)
 }
+const getXPorrete = () =>{
+  return parseInt(window.getComputedStyle(porrete).left)
+}
+const getYPorrete = () =>{
+  return parseInt(window.getComputedStyle(porrete).bottom)
+}
+
 
 const getAtq = ()=>{
-  return window.getComputedStyle(campoAtq).backgroundColor
+  return ataque
 }
 
 
 const atacando = ()=>{
 
-  if(ataque){
-    campoAtq.style.backgroundColor = "blue"
-  }
-  else{
-    campoAtq.style.backgroundColor = ""
-
+  if((ataque)&&(heroiComPorrete)){
+    heroizinho.style.backgroundImage = 'url(./Gifs/HeroiAtacando.gif)'
   }
 
 }
 
 setInterval(()=>{
 
+
     heroizinhoPositionX = getX()
     heroizinhoPositionY = getY()
+    
+    if(((funcao=='l')||(funcao == 'r')||(funcao == 'u')||(funcao == 'd'))&&(funcao != 'a')){
 
+      heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendoPorrete.gif)': heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendo.gif)'
+    }
+    else{
+      heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParadoPorrete.gif)' : heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParado.gif)'
+    }
 
     if ((funcao == 'l')&&(heroizinhoPositionX>1)){      
       novaPosição = heroizinhoPositionX - 2
       heroizinho.style.left = novaPosição +"px"
-      campoAtq.style.left = (novaPosição - 40) +"px"
+      heroizinho.style.transform = 'scaleX(-1)'
     }
-    if ((funcao == 'r')&&(heroizinhoPositionX<600)){
+    if ((funcao == 'r')&&(heroizinhoPositionX<580)){
       novaPosição = heroizinhoPositionX + 2
       heroizinho.style.left = novaPosição +"px"
-      campoAtq.style.left = (novaPosição - 40) +"px"
+      heroizinho.style.transform = 'scaleX(1)'
     }
-    if ((funcao == 'u')&&(heroizinhoPositionY<269)){      
+    if ((funcao == 'u')&&(heroizinhoPositionY<170)){      
       novaPosição = heroizinhoPositionY + 2
       heroizinho.style.bottom = novaPosição +"px"
-      campoAtq.style.bottom = novaPosição +"px"
     }
     if ((funcao == 'd')&&(heroizinhoPositionY>5)){
       novaPosição = heroizinhoPositionY - 2
       heroizinho.style.bottom = novaPosição +"px"
-      campoAtq.style.bottom = novaPosição +"px"
     }
 
     if (funcao == 'a'){
       ataque = true;
     }
 
-    if((ataque)&&(tempoAtq<20)){
+    if((ataque)&&(tempoAtq<40)){
         tempoAtq++
       }
       else{
@@ -110,5 +127,9 @@ document.addEventListener('keydown', function(e) {
 export default {
     getX:getX,
     getY:getY,
-    getAtq:getAtq
+    getAtq:getAtq,
+    getXPorrete:getXPorrete,
+    getYPorrete:getYPorrete,
+    settHeroiComPorrete:settHeroiComPorrete,
+    gettHeroiComPorrete:gettHeroiComPorrete
 }

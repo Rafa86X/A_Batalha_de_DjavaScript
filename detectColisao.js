@@ -2,6 +2,12 @@ import movEnimigo from "./movEnimigo.js";
 import controlesPersonagem from "./controlesPersonagem.js";
 import blocosDano from "./blocosDano.js"
 
+const heroizinho = document.getElementById("heoizinho")
+const enimigo = document.getElementById("enimigo")
+const porrete = document.getElementById("porrete")
+ 
+
+
 let comandoAtq
 let vidaHeroi = 1000
 let tempoNovoDanoH = 0
@@ -9,6 +15,9 @@ let travaDanoH = false
 let vidaEnimigo = 10000
 let tempoNovoDanoE = 0
 let travaDanoE = false
+let tempoAnimaDano = 0
+let tempoAnimaDano2 = 0
+
 
 const gettravaDanoE = ()=>{
     return travaDanoE
@@ -23,39 +32,57 @@ const getVidaEnimigo = ()=>{
 const ColisaoEnimigo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 
     if((Math.abs(posiHeroiX - enimigoX) < 42) &&
-    ((Math.abs(posiHeroiY - enimigoY) < 50)))
+    ((Math.abs(posiHeroiY  - enimigoY) < 5)))
     {
-        travaDanoH ? "": travaDanoH=true
+        travaDanoH=true
     }
 }
+
+const blocoPorrete = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
+
+
+    if((Math.abs(posiHeroiX + 60 - enimigoX-50)  < 50) &&
+    ((Math.abs(posiHeroiY+20 - enimigoY-30) < 20)))
+    {
+        porrete.style.visibility = 'hidden'
+        porrete.style.left = 1000 + 'px'
+        porrete.style.bottom = 1000 + 'px'
+        controlesPersonagem.settHeroiComPorrete(true)
+    }
+
+}
+
 
 const blocoColisaoDano = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 
-    if((Math.abs(posiHeroiX - enimigoX - 3) < 50) &&
-    ((Math.abs(posiHeroiY - enimigoY - 3) < 50)))
+
+    if((Math.abs(posiHeroiX + 40 - enimigoX - 3)  < 50) &&
+    ((Math.abs(posiHeroiY - enimigoY - 3) < 20)))
     {
-        travaDanoH ? "": travaDanoH=true
+        travaDanoH=true
     }
 
 }
 
-const blocoColisaoCortinaFogo = (posiHeroiX,enimigoX)=>{
+const blocoColisaoCortinaFogo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 
-    if(Math.abs(posiHeroiX - enimigoX) < 42)  
+    if((Math.abs(posiHeroiX + 40 - enimigoX - 3)  < 50) &&
+    ((Math.abs(posiHeroiY - enimigoY - 3) < 30)))
     {
-        travaDanoH ? "": travaDanoH=true
+        travaDanoH=true
     }
 
 }
 
 const contatoAtq = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
-    if((Math.abs(posiHeroiX - enimigoX) < 80) &&
-    ((Math.abs(posiHeroiY - enimigoY) < 45))&&
-    (comandoAtq == "5"))
+    if((Math.abs(posiHeroiX - 20 - enimigoX) < 90) &&
+    ((Math.abs(posiHeroiY - 10 - enimigoY) < 20))&&
+    (comandoAtq)&&(controlesPersonagem.gettHeroiComPorrete()))
     {
         {   
-            movEnimigo.enimigo.style.backgroundColor = "red"        
+            movEnimigo.setDano(true)
             travaDanoE = true
+            //controlesPersonagem.settHeroiComPorrete(false)
         }
     }  
 }
@@ -67,12 +94,17 @@ const novoDanoNoHeroi = ()=>{
         vidaHeroi = vidaHeroi - 10
     }
 
-    if(travaDanoH==true){
-        if(tempoNovoDanoH<20){
+    if(travaDanoH){
+        tempoAnimaDano++
+        ((tempoAnimaDano % 5 === 0)||(tempoAnimaDano % 2 === 0)) ? heroizinho.style.visibility = 'hidden': heroizinho.style.visibility = 'visible';
+        tempoAnimaDano > 100 ? tempoAnimaDano = 0: tempoAnimaDano
+        if(tempoNovoDanoH<40){
             tempoNovoDanoH++
+
         }else{
             tempoNovoDanoH = 0
             travaDanoH = false
+            heroizinho.style.visibility = 'visible';
         }
     }
 
@@ -83,22 +115,45 @@ const novoDanoNoEnimigo = ()=>{
     if((tempoNovoDanoE==0)&&(travaDanoE)){
         vidaEnimigo = vidaEnimigo - 10
     }
-    if(travaDanoE==true){
-        if(tempoNovoDanoE<20){
-            tempoNovoDanoE++
-        }else{
-            movEnimigo.enimigo.style.backgroundColor = ""  
+    if(travaDanoE){
+            if(tempoNovoDanoE<80){
+                tempoNovoDanoE++
+                ((tempoNovoDanoE % 5 === 0)||(tempoNovoDanoE % 2 === 0)) ? enimigo.style.visibility = 'hidden': enimigo.style.visibility = 'visible';
+                tempoNovoDanoE > 100 ? tempoNovoDanoE = 0: tempoNovoDanoE           
+            }
+            
+        else{
+            movEnimigo.setDano(false)
             tempoNovoDanoE = 0
             travaDanoE = false
+            enimigo.style.visibility = 'visible';
         }
     }
-
 }
+
+
 
 setInterval(()=>{
 
 
-    comandoAtq = controlesPersonagem.getAtq()[12] 
+    comandoAtq = controlesPersonagem.getAtq()
+    blocoColisaoCortinaFogo(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_blocoCF1(),blocosDano.getY_blocoCF1())
+
+    blocoColisaoCortinaFogo(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_blocoCF2(),blocosDano.getY_blocoCF2())
+
+    blocoColisaoCortinaFogo(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_blocoCF3(),blocosDano.getY_blocoCF3())
+
+    blocoColisaoCortinaFogo(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_blocoCF4(),blocosDano.getY_blocoCF4())
+
+    blocoColisaoCortinaFogo(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    blocosDano.getX_blocoCF5(),blocosDano.getY_blocoCF5())
+    
+    blocoPorrete(controlesPersonagem.getX(),controlesPersonagem.getY(),
+    controlesPersonagem.getXPorrete(),controlesPersonagem.getYPorrete())
 
     ColisaoEnimigo(controlesPersonagem.getX(),controlesPersonagem.getY(),
     movEnimigo.getX(),movEnimigo.getY())
@@ -106,8 +161,7 @@ setInterval(()=>{
     contatoAtq(controlesPersonagem.getX(),controlesPersonagem.getY(),
     movEnimigo.getX(),movEnimigo.getY())
 
-    blocoColisaoCortinaFogo(controlesPersonagem.getX(),blocosDano.getX_bloco0())
-
+    
     blocoColisaoDano(controlesPersonagem.getX(),controlesPersonagem.getY(),
     blocosDano.getX_bloco1(),blocosDano.getY_bloco1())
 
@@ -127,5 +181,6 @@ setInterval(()=>{
 export default {
     getVidaHeroi:getVidaHeroi,
     getVidaEnimigo:getVidaEnimigo,
-    gettravaDanoE:gettravaDanoE
+    gettravaDanoE:gettravaDanoE,
+
 }

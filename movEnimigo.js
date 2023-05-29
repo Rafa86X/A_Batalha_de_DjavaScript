@@ -2,70 +2,51 @@ import controlesPersonagem from "./controlesPersonagem.js"
 
 const enimigo = document.getElementById("enimigo")
 
-
-let novaPosição
-
 const getX = () =>{
     return parseInt(window.getComputedStyle(enimigo).left)
 }
 const getY = () =>{
     return parseInt(window.getComputedStyle(enimigo).bottom)
 }
-
-const getDano =()=>{
-    return window.getComputedStyle(enimigo).backgroundColor
+const setDano = (set) =>{
+    dano = set
 }
-
+let dano
+let novaPosição
 let alvoX
 let alvoY
 let posiX
 let posiY
 let ativado=false
-let corrida = false
-let velocidade
-let tempoRecomeca = 0
 
+let velocidade
+let fugindo = false
 let pause = false
+let posiXini = 630
+let posiYini = 80
 
 const recomeca = ()=>{
-
-
     if(pause){
-        if((tempoRecomeca<500)){
-            tempoRecomeca = tempoRecomeca + 1       
-            
-        }
-        if(tempoRecomeca>=500){
-            ativado = true
-        }
-        else{
-            ativado = false
-        }
-            
-        if((posiX == 700 )&&(posiY==150)&&(corrida==true)){
-                corrida=false
-                tempoRecomeca = 0
-                console.log("tempoRecomeca, corrida")
-                chegouNopontoInicio = true
-        }
+        ativado = true
     }
-
-                     
-
+    if((posiX == posiXini )&&(posiY==posiYini)&&(fugindo==true)){
+            ativado = false
+            fugindo = false
+    }
+    
 }
 
 
 
 const tomouDano =()=>{
-    if(getDano()[5] == "5"){
-        corrida= true
+    if(dano){
+        fugindo = true
     }
 
-    if(corrida){
-
-        velocidade = (alvoX - posiX < 80) ? velocidade = 1 : velocidade = 2
-        alvoX = 700
-        alvoY = 150
+    if(fugindo){
+        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = 3
+        alvoX = posiXini
+        alvoY = posiYini
 
     }else{
         alvoX = controlesPersonagem.getX()
@@ -96,17 +77,45 @@ const mov = () =>{
             enimigo.style.bottom = novaPosição +"px"
         }  
     }
+}   
+
+const corregedorDeEscala = () =>{
+    
+    if(!fugindo){
+        if(controlesPersonagem.getX()>getX())
+            enimigo.style.transform = 'scaleX(1)'
+        else
+            enimigo.style.transform = 'scaleX(-1)'
+    }
+    else
+        enimigo.style.transform = 'scaleX(1)'
 }
 
+    const animacao = () =>{
+
+        if(ativado){
+            if(velocidade>1)
+                enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendoRapido.gif)'
+            else
+                enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendo.gif)'
+        }
+        else
+            enimigo.style.backgroundImage = 'url(./Gifs/enimigoParado.gif)'
+        
+    }
+
+
+
 setInterval(()=>{
-   
+    animacao()
+    corregedorDeEscala()
     posiX = getX()
     posiY = getY()
     mov()
     tomouDano()
     recomeca()
   
-},10);
+},20);
 
 
 document.addEventListener('keydown', function(e) {
@@ -128,5 +137,5 @@ document.addEventListener('keydown', function(e) {
 export default {
     getX:getX,
     getY:getY,
-    enimigo:enimigo
+    setDano:setDano
 }
