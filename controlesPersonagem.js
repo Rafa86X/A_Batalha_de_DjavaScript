@@ -1,5 +1,5 @@
 const heroizinho = document.getElementById("heoizinho")
-const porrete = document.getElementById("porrete")
+
 
 
 let heroizinhoPositionX
@@ -22,12 +22,6 @@ const getX = () =>{
 }
 const getY = () =>{
     return parseInt(window.getComputedStyle(heroizinho).bottom)
-}
-const getXPorrete = () =>{
-  return parseInt(window.getComputedStyle(porrete).left)
-}
-const getYPorrete = () =>{
-  return parseInt(window.getComputedStyle(porrete).bottom)
 }
 
 
@@ -128,8 +122,6 @@ export default {
     getX:getX,
     getY:getY,
     getAtq:getAtq,
-    getXPorrete:getXPorrete,
-    getYPorrete:getYPorrete,
     settHeroiComPorrete:settHeroiComPorrete,
     gettHeroiComPorrete:gettHeroiComPorrete
 }

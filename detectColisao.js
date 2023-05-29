@@ -1,11 +1,10 @@
 import movEnimigo from "./movEnimigo.js";
 import controlesPersonagem from "./controlesPersonagem.js";
 import blocosDano from "./blocosDano.js"
+import porrete from "./porrete.js";
 
 const heroizinho = document.getElementById("heoizinho")
 const enimigo = document.getElementById("enimigo")
-const porrete = document.getElementById("porrete")
- 
 
 
 let comandoAtq
@@ -16,7 +15,6 @@ let vidaEnimigo = 10000
 let tempoNovoDanoE = 0
 let travaDanoE = false
 let tempoAnimaDano = 0
-let tempoAnimaDano2 = 0
 
 
 const gettravaDanoE = ()=>{
@@ -44,9 +42,7 @@ const blocoPorrete = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
     if((Math.abs(posiHeroiX + 60 - enimigoX-50)  < 50) &&
     ((Math.abs(posiHeroiY+20 - enimigoY-30) < 20)))
     {
-        porrete.style.visibility = 'hidden'
-        porrete.style.left = 1000 + 'px'
-        porrete.style.bottom = 1000 + 'px'
+        porrete.desaparecePorrete()
         controlesPersonagem.settHeroiComPorrete(true)
     }
 
@@ -153,7 +149,7 @@ setInterval(()=>{
     blocosDano.getX_blocoCF5(),blocosDano.getY_blocoCF5())
     
     blocoPorrete(controlesPersonagem.getX(),controlesPersonagem.getY(),
-    controlesPersonagem.getXPorrete(),controlesPersonagem.getYPorrete())
+    porrete.getXPorrete(),porrete.getYPorrete())
 
     ColisaoEnimigo(controlesPersonagem.getX(),controlesPersonagem.getY(),
     movEnimigo.getX(),movEnimigo.getY())
