@@ -1,6 +1,6 @@
 import blocosDano from "./blocosDano.js";
-import controlesPersonagem from "./controlesPersonagem.js";
-import movEnimigo from "./movEnimigo.js";
+import controlesPersonagem from "./heroi.js";
+import movEnimigo from "./comportamentoEnimigo.js";
 
 
 

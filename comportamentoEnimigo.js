@@ -1,7 +1,24 @@
-import controlesPersonagem from "./controlesPersonagem.js"
+import controlesPersonagem from "./heroi.js"
 
 const enimigo = document.getElementById("enimigo")
+let novaPosição
+let alvoX
+let alvoY
+let posiX
+let posiY
+let ativado=false
+let vidaEnimigo = 100
+let tempoNovoDanoE = 0
+let travaDanoE = false
+let velocidade
+let fugindo = false
+let pause = false
+let posiXini = 630
+let posiYini = 80
 
+const getVidaEnimigo = ()=>{
+    return vidaEnimigo
+}
 const getX = () =>{
     return parseInt(window.getComputedStyle(enimigo).left)
 }
@@ -9,24 +26,31 @@ const getY = () =>{
     return parseInt(window.getComputedStyle(enimigo).bottom)
 }
 const setDano = (set) =>{
-    dano = set
+    travaDanoE = set
 }
-let dano
-let novaPosição
-let alvoX
-let alvoY
-let posiX
-let posiY
-let ativado=false
-
-let velocidade
-let fugindo = false
-let pause = false
-let posiXini = 630
-let posiYini = 80
 
 let setPause = (set)=>{
     pause = set
+}
+
+const novoDanoNoEnimigo = ()=>{
+
+    if((tempoNovoDanoE==0)&&(travaDanoE)){
+        vidaEnimigo = vidaEnimigo - 10
+    }
+    if(travaDanoE){
+            if(tempoNovoDanoE<80){
+                tempoNovoDanoE++
+                ((tempoNovoDanoE % 5 === 0)||(tempoNovoDanoE % 2 === 0)) ? enimigo.style.visibility = 'hidden': enimigo.style.visibility = 'visible';
+                tempoNovoDanoE > 100 ? tempoNovoDanoE = 0: tempoNovoDanoE           
+            }
+            
+        else{
+            tempoNovoDanoE = 0
+            travaDanoE = false
+            enimigo.style.visibility = 'visible';
+        }
+    }
 }
 
 const recomeca = ()=>{
@@ -43,7 +67,7 @@ const recomeca = ()=>{
 
 
 const tomouDano =()=>{
-    if(dano){
+    if(travaDanoE){
         fugindo = true
     }
 
@@ -122,6 +146,8 @@ setInterval(()=>{
 },20);
 
 export default {
+    getVidaEnimigo:getVidaEnimigo,
+    novoDanoNoEnimigo:novoDanoNoEnimigo,
     getX:getX,
     getY:getY,
     setDano:setDano,

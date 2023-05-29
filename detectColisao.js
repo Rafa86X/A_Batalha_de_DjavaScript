@@ -1,27 +1,13 @@
-import movEnimigo from "./movEnimigo.js";
-import controlesPersonagem from "./controlesPersonagem.js";
+import movEnimigo from "./comportamentoEnimigo.js";
+import controlesPersonagem from "./heroi.js";
 import blocosDano from "./blocosDano.js"
 import porrete from "./porrete.js";
-
-const enimigo = document.getElementById("enimigo")
-
 
 let comandoAtq
 
 
-
-let vidaEnimigo = 10000
-let tempoNovoDanoE = 0
-let travaDanoE = false
-
-
-
 const gettravaDanoE = ()=>{
     return travaDanoE
-}
-
-const getVidaEnimigo = ()=>{
-    return vidaEnimigo
 }
 
 const ColisaoEnimigo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
@@ -73,38 +59,10 @@ const contatoAtq = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
     (comandoAtq)&&(controlesPersonagem.gettHeroiComPorrete()))
     {
         {   
-            movEnimigo.setDano(true)
-            travaDanoE = true
-            
+            movEnimigo.setDano(true)           
         }
     }  
 }
-
-
-
-
-const novoDanoNoEnimigo = ()=>{
-
-    if((tempoNovoDanoE==0)&&(travaDanoE)){
-        vidaEnimigo = vidaEnimigo - 10
-    }
-    if(travaDanoE){
-            if(tempoNovoDanoE<80){
-                tempoNovoDanoE++
-                ((tempoNovoDanoE % 5 === 0)||(tempoNovoDanoE % 2 === 0)) ? enimigo.style.visibility = 'hidden': enimigo.style.visibility = 'visible';
-                tempoNovoDanoE > 100 ? tempoNovoDanoE = 0: tempoNovoDanoE           
-            }
-            
-        else{
-            movEnimigo.setDano(false)
-            tempoNovoDanoE = 0
-            travaDanoE = false
-            enimigo.style.visibility = 'visible';
-        }
-    }
-}
-
-
 
 setInterval(()=>{
 
@@ -145,14 +103,12 @@ setInterval(()=>{
     blocosDano.getX_bloco3(),blocosDano.getY_bloco3())
 
     controlesPersonagem.novoDanoNoHeroi()
-    novoDanoNoEnimigo()
-
+    movEnimigo.novoDanoNoEnimigo()
 
 },10);
 
 
 export default {
-    getVidaEnimigo:getVidaEnimigo,
     gettravaDanoE:gettravaDanoE,
 
 }

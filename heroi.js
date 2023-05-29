@@ -1,7 +1,7 @@
 const heroizinho = document.getElementById("heoizinho")
 
 
-let vidaHeroi = 1000
+let vidaHeroi = 50
 let tempoNovoDanoH = 0
 let tempoAnimaDano = 0
 let travaDanoH = false
