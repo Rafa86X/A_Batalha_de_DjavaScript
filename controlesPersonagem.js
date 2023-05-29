@@ -1,7 +1,10 @@
 const heroizinho = document.getElementById("heoizinho")
 
 
-
+let vidaHeroi = 1000
+let tempoNovoDanoH = 0
+let tempoAnimaDano = 0
+let travaDanoH = false
 let heroizinhoPositionX
 let heroizinhoPositionY
 var funcao = ''
@@ -10,6 +13,12 @@ let ataque = false
 let tempoAtq = 0
 let heroiComPorrete = false
 
+const setDano = (set) =>{
+  travaDanoH = set
+}
+const getVidaHeroi = ()=>{
+  return vidaHeroi
+}
 const gettHeroiComPorrete = ()=>{
      return heroiComPorrete
 }
@@ -34,6 +43,28 @@ const atacando = ()=>{
 
   if((ataque)&&(heroiComPorrete)){
     heroizinho.style.backgroundImage = 'url(./Gifs/HeroiAtacando.gif)'
+  }
+
+}
+
+const novoDanoNoHeroi = ()=>{
+
+  if((tempoNovoDanoH==0)&&(travaDanoH)){
+      vidaHeroi = vidaHeroi - 10
+  }
+
+  if(travaDanoH){
+      tempoAnimaDano++
+      ((tempoAnimaDano % 5 === 0)||(tempoAnimaDano % 2 === 0)) ? heroizinho.style.visibility = 'hidden': heroizinho.style.visibility = 'visible';
+      tempoAnimaDano > 100 ? tempoAnimaDano = 0: tempoAnimaDano
+      if(tempoNovoDanoH<40){
+          tempoNovoDanoH++
+
+      }else{
+          tempoNovoDanoH = 0
+          travaDanoH = false
+          heroizinho.style.visibility = 'visible';
+      }
   }
 
 }
@@ -120,6 +151,9 @@ document.addEventListener('keydown', function(e) {
 
 
 export default {
+    setDano:setDano,
+    getVidaHeroi:getVidaHeroi,
+    novoDanoNoHeroi:novoDanoNoHeroi,
     getX:getX,
     getY:getY,
     getAtq:getAtq,

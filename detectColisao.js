@@ -3,26 +3,23 @@ import controlesPersonagem from "./controlesPersonagem.js";
 import blocosDano from "./blocosDano.js"
 import porrete from "./porrete.js";
 
-const heroizinho = document.getElementById("heoizinho")
 const enimigo = document.getElementById("enimigo")
 
 
 let comandoAtq
-let vidaHeroi = 1000
-let tempoNovoDanoH = 0
-let travaDanoH = false
+
+
+
 let vidaEnimigo = 10000
 let tempoNovoDanoE = 0
 let travaDanoE = false
-let tempoAnimaDano = 0
+
 
 
 const gettravaDanoE = ()=>{
     return travaDanoE
 }
-const getVidaHeroi = ()=>{
-    return vidaHeroi
-}
+
 const getVidaEnimigo = ()=>{
     return vidaEnimigo
 }
@@ -32,7 +29,7 @@ const ColisaoEnimigo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
     if((Math.abs(posiHeroiX - enimigoX) < 42) &&
     ((Math.abs(posiHeroiY  - enimigoY) < 5)))
     {
-        travaDanoH=true
+        controlesPersonagem.setDano(true)
     }
 }
 
@@ -55,7 +52,7 @@ const blocoColisaoDano = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
     if((Math.abs(posiHeroiX + 40 - enimigoX - 3)  < 50) &&
     ((Math.abs(posiHeroiY - enimigoY - 3) < 20)))
     {
-        travaDanoH=true
+        controlesPersonagem.setDano(true)
     }
 
 }
@@ -65,7 +62,7 @@ const blocoColisaoCortinaFogo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
     if((Math.abs(posiHeroiX + 40 - enimigoX - 3)  < 50) &&
     ((Math.abs(posiHeroiY - enimigoY - 3) < 30)))
     {
-        travaDanoH=true
+        controlesPersonagem.setDano(true)
     }
 
 }
@@ -84,27 +81,7 @@ const contatoAtq = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 }
 
 
-const novoDanoNoHeroi = ()=>{
 
-    if((tempoNovoDanoH==0)&&(travaDanoH)){
-        vidaHeroi = vidaHeroi - 10
-    }
-
-    if(travaDanoH){
-        tempoAnimaDano++
-        ((tempoAnimaDano % 5 === 0)||(tempoAnimaDano % 2 === 0)) ? heroizinho.style.visibility = 'hidden': heroizinho.style.visibility = 'visible';
-        tempoAnimaDano > 100 ? tempoAnimaDano = 0: tempoAnimaDano
-        if(tempoNovoDanoH<40){
-            tempoNovoDanoH++
-
-        }else{
-            tempoNovoDanoH = 0
-            travaDanoH = false
-            heroizinho.style.visibility = 'visible';
-        }
-    }
-
-}
 
 const novoDanoNoEnimigo = ()=>{
 
@@ -167,7 +144,7 @@ setInterval(()=>{
     blocoColisaoDano(controlesPersonagem.getX(),controlesPersonagem.getY(),
     blocosDano.getX_bloco3(),blocosDano.getY_bloco3())
 
-    novoDanoNoHeroi()
+    controlesPersonagem.novoDanoNoHeroi()
     novoDanoNoEnimigo()
 
 
@@ -175,7 +152,6 @@ setInterval(()=>{
 
 
 export default {
-    getVidaHeroi:getVidaHeroi,
     getVidaEnimigo:getVidaEnimigo,
     gettravaDanoE:gettravaDanoE,
 

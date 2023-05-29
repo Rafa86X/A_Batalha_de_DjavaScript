@@ -1,3 +1,4 @@
+import controlesPersonagem from "./controlesPersonagem.js";
 import detectColisao from "./detectColisao.js";
 
 
@@ -8,7 +9,7 @@ const vidaEnimigo = document.getElementById("vidaEnimigo")
 
 setInterval(()=>{
 
-    vidaHeroi.textContent = detectColisao.getVidaHeroi()
+    vidaHeroi.textContent = controlesPersonagem.getVidaHeroi()
     vidaEnimigo.textContent = detectColisao.getVidaEnimigo()
 
 },10);
