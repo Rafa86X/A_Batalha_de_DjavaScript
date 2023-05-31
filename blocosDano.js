@@ -23,6 +23,11 @@ let posicaoFormacao = []
 let tempoDinamicaX=0
 let dianmicaX_Ativada = false
 let reposi =false
+let pause = false
+
+const setPause=(set)=>{
+    pause = set
+  }
 
 const getX_blocoCF1 = () =>{
     return parseInt(window.getComputedStyle(blocoCF1).left)
@@ -122,21 +127,23 @@ const atitudeBloco = (posiX1,posiX2,posiX3,posiY1,posiY2,posiY3,referencia1,refe
         espera=0
         posicionado = true
     }
-    espera++
-    if((getX_bloco1()>-100)&&(espera>referencia1)){
-        bloco1.style.left = (getX_bloco1() - velocidade ) + "px"
-    }
-
-    if((getX_bloco3()>-100)&&(espera>referencia2)){
-        bloco3.style.left = (getX_bloco3() - velocidade ) + "px"
-    }
-
-    if((getX_bloco2()>-100)&&(espera>referencia3)){
-        bloco2.style.left = (getX_bloco2() - velocidade ) + "px"
-    }
-    if((getX_bloco1()<=-100)&&(getX_bloco2()<=-100)&&(getX_bloco3()<=-100)){
-        posicionado = false
-        return true
+    if(pause){
+        espera++
+        if((getX_bloco1()>-100)&&(espera>referencia1)){
+            bloco1.style.left = (getX_bloco1() - velocidade ) + "px"
+        }
+    
+        if((getX_bloco3()>-100)&&(espera>referencia2)){
+            bloco3.style.left = (getX_bloco3() - velocidade ) + "px"
+        }
+    
+        if((getX_bloco2()>-100)&&(espera>referencia3)){
+            bloco2.style.left = (getX_bloco2() - velocidade ) + "px"
+        }
+        if((getX_bloco1()<=-100)&&(getX_bloco2()<=-100)&&(getX_bloco3()<=-100)){
+            posicionado = false
+            return true
+        }
     }
        
     else
@@ -153,14 +160,17 @@ const movimentaBloco = (altura,bloco,velocidade, cicloX,cicloIndice)=>{
          if(posicaoXbloco <= 20)
          cicloX= false         
 
-        if((cicloX==false)&&(posicaoXbloco<550))
-        {
-            bloco.style.left = (posicaoXbloco + velocidade) + "px"
-        }       
-        if(cicloX==true)
-        {
-            bloco.style.left = (posicaoXbloco - velocidade) + "px"
+        if(pause){
+            if((cicloX==false)&&(posicaoXbloco<550))
+            {
+                bloco.style.left = (posicaoXbloco + velocidade) + "px"
+            }       
+            if(cicloX==true)
+            {
+                bloco.style.left = (posicaoXbloco - velocidade) + "px"
+            }
         }
+
         ciclo[cicloIndice] = cicloX
 
    
@@ -170,6 +180,9 @@ const movimentaBloco = (altura,bloco,velocidade, cicloX,cicloIndice)=>{
 const dinamica_X = ()=>{
 
     if(dianmicaX_Ativada){
+        bloco1.style.backgroundImage = 'url(./Gifs/fogoSombrio.gif)'
+        bloco2.style.backgroundImage = 'url(./Gifs/fogoSombrio.gif)'
+        bloco3.style.backgroundImage = 'url(./Gifs/fogoSombrio.gif)'
         reposi = false
         if(tempoDinamicaX<2){
             bloco1.style.left = (PosiIniFases[0]) + "px"
@@ -179,9 +192,9 @@ const dinamica_X = ()=>{
             bloco3.style.left = (PosiIniFases[4]) + "px"
             bloco3.style.bottom = (PosiIniFases[5]) + "px"
         }
-        movimentaBloco(80,bloco3,2,ciclo[2],2)
-        movimentaBloco(10,bloco2,3,ciclo[1],1)
-        movimentaBloco(150,bloco1,4,ciclo[0],0)
+        movimentaBloco(80,bloco3,5,ciclo[2],2)
+        movimentaBloco(10,bloco2,9,ciclo[1],1)
+        movimentaBloco(150,bloco1,9,ciclo[0],0)
 
         if(tempoDinamicaX<=10){
             tempoDinamicaX++
@@ -189,6 +202,9 @@ const dinamica_X = ()=>{
     }
     else{
         if(reposi==false){
+            bloco1.style.backgroundImage = 'url(./Gifs/fogoNormal.gif)'
+            bloco2.style.backgroundImage = 'url(./Gifs/fogoNormal.gif)'
+            bloco3.style.backgroundImage = 'url(./Gifs/fogoNormal.gif)'
             bloco1.style.left = 800 + "px"
             bloco1.style.bottom = 800 + "px"
             bloco2.style.left = 800 + "px"
@@ -226,12 +242,12 @@ const dinamica = (numeroDim,velocidade,i) =>{
 
 setInterval(()=>{
 
-    // dinamica(1,5,0)
-    // dinamica(2,9,1)
-    // dinamica(3,11,2)
-    // dinamica(1,13,3)
-    // dinamica(2,13,4)
-    // dinamica_X()
+    dinamica(1,5,0)
+    dinamica(2,9,1)
+    dinamica(3,11,2)
+    dinamica(1,13,3)
+    dinamica(2,13,4)
+    dinamica_X()
    },30);
 
 
@@ -247,5 +263,6 @@ export default{
     getX_bloco3:getX_bloco3, getY_bloco3:getY_bloco3,
     setFaseIniciada:setFaseIniciada,
     getFaseFinalizada:getFaseFinalizada,
-    setDinamica_X:setDinamica_X
+    setDinamica_X:setDinamica_X,
+    setPause:setPause
 }

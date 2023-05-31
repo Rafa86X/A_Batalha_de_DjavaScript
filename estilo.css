@@ -107,7 +107,7 @@ body{
 
 
 .blocoDano{
-    background-image: url("./Gifs/fogo01.gif");
+    background-image: url("./Gifs/fogoNormal.gif");
     background-repeat: no-repeat;
     position: absolute;
     background-position:initial;

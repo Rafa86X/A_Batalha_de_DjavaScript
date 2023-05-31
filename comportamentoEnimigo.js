@@ -17,6 +17,16 @@ let posiXini = 630
 let posiYini = 80
 let velo_setada = 1
 let bloqueadoPeloControlador = false
+let ini=false
+
+const iniGeral = () =>{
+
+    if(!ini){
+        pause = true
+        ini = true
+    }
+
+}
 
 const getPosicaoInicial = () =>{
    return ((getX()==posiX)&&(getY()==posiYini)) ? true : false
@@ -27,9 +37,6 @@ const liberaNovoDanoEnimigo = ()=>{
 }
 const getAconteceuDano = () =>{
     return bloqueadoPeloControlador
-}
-const setVelocidade = (set) =>{
-    velo_setada = set
 }
 
 const getVidaEnimigo = ()=>{
@@ -51,6 +58,10 @@ const setPause = (set)=>{
 
 const getPause = () =>{
     return pause
+}
+
+const setVelocidade = (set) =>{
+    velo_setada = set
 }
 
 const novoDanoNoEnimigo = ()=>{
@@ -96,7 +107,7 @@ const tomouDano =()=>{
     }
 
     if(fugindo){
-        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = velo_setada +3
+        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = velo_setada*3
         alvoX = posiXini
         alvoY = posiYini
 
@@ -115,7 +126,7 @@ const mov = () =>{
         if(alvoX < posiX){
             novaPosição = posiX - velocidade
             enimigo.style.left = novaPosição +"px"
-        }   
+        }  
         if(alvoX > posiX){
             novaPosição = posiX + velocidade
             enimigo.style.left = novaPosição +"px"
@@ -157,7 +168,6 @@ const corregedorDeEscala = () =>{
     }
 
 
-
 setInterval(()=>{
     animacao()
     corregedorDeEscala()
@@ -177,9 +187,10 @@ export default {
     getY:getY,
     setDano:setDano,
     setPause:setPause,
-    setVelocidade:setVelocidade,
     liberaNovoDanoEnimigo:liberaNovoDanoEnimigo,
     getAconteceuDano:getAconteceuDano,
     getPosicaoInicial:getPosicaoInicial,
-    getPause:getPause
+    getPause:getPause,
+    setVelocidade:setVelocidade,
+    iniGeral:iniGeral
 }

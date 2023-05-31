@@ -121,11 +121,22 @@ document.addEventListener('keydown', function(e) {
             break; 
            
         case "p":
-            movEnimigo.setPause(true)
+            if(heroi.getPause()==false){
+                movEnimigo.iniGeral()
+                heroi.setPause(true)
+                blocosDano.setPause(true)
+                movEnimigo.setVelocidade(1)
+            }
+            else{
+                heroi.setPause(false)
+                blocosDano.setPause(false)
+                movEnimigo.setVelocidade(0)   
+            }
             break;  
 
         case "i":
             movEnimigo.setPause(false)
+            heroi.setPause(false)
             break;
 
         case "u":

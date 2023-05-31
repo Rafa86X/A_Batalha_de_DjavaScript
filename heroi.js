@@ -12,7 +12,14 @@ let novaPosição
 let ataque = false
 let tempoAtq = 0
 let heroiComPorrete = false
+let pause = false
 
+const setPause=(set)=>{
+  pause = set
+}
+const getPause=()=>{
+  return pause
+}
 const setDano = (set) =>{
   travaDanoH = set
 }
@@ -41,7 +48,7 @@ const getAtq = ()=>{
 
 const atacando = ()=>{
 
-  if((ataque)&&(heroiComPorrete)){
+  if((ataque)&&(heroiComPorrete)&&(pause)){
     heroizinho.style.backgroundImage = 'url(./Gifs/HeroiAtacando.gif)'
   }
 
@@ -49,73 +56,81 @@ const atacando = ()=>{
 
 const novoDanoNoHeroi = ()=>{
 
-  if((tempoNovoDanoH==0)&&(travaDanoH)){
-      vidaHeroi = vidaHeroi - 10
+  if(pause){
+    if((tempoNovoDanoH==0)&&(travaDanoH)){
+        vidaHeroi = vidaHeroi - 10
+    }
+  
+    if(travaDanoH){
+        tempoAnimaDano++
+        ((tempoAnimaDano % 5 === 0)||(tempoAnimaDano % 2 === 0)) ? heroizinho.style.visibility = 'hidden': heroizinho.style.visibility = 'visible';
+        tempoAnimaDano > 100 ? tempoAnimaDano = 0: tempoAnimaDano
+        if(tempoNovoDanoH<40){
+            tempoNovoDanoH++
+  
+        }else{
+            tempoNovoDanoH = 0
+            travaDanoH = false
+            heroizinho.style.visibility = 'visible';
+        }
+    }
   }
+}
 
-  if(travaDanoH){
-      tempoAnimaDano++
-      ((tempoAnimaDano % 5 === 0)||(tempoAnimaDano % 2 === 0)) ? heroizinho.style.visibility = 'hidden': heroizinho.style.visibility = 'visible';
-      tempoAnimaDano > 100 ? tempoAnimaDano = 0: tempoAnimaDano
-      if(tempoNovoDanoH<40){
-          tempoNovoDanoH++
+const movimantando = () =>{
 
-      }else{
-          tempoNovoDanoH = 0
-          travaDanoH = false
-          heroizinho.style.visibility = 'visible';
-      }
-  }
+      if(pause){
+          heroizinhoPositionX = getX()
+          heroizinhoPositionY = getY()
+          
+          if(((funcao=='l')||(funcao == 'r')||(funcao == 'u')||(funcao == 'd'))&&(funcao != 'a')){
+      
+            heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendoPorrete.gif)': heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendo.gif)'
+          }
+          else{
+            heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParadoPorrete.gif)' : heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParado.gif)'
+          }
+      
+          if ((funcao == 'l')&&(heroizinhoPositionX>1)){  
+        
+            novaPosição = heroizinhoPositionX - 2
+            heroizinho.style.left = novaPosição +"px"
+            heroizinho.style.transform = 'scaleX(-1)'
+          }
+          if ((funcao == 'r')&&(heroizinhoPositionX<580)){
+            novaPosição = heroizinhoPositionX + 2
+            heroizinho.style.left = novaPosição +"px"
+            heroizinho.style.transform = 'scaleX(1)'
+          }
+          if ((funcao == 'u')&&(heroizinhoPositionY<170)){      
+            novaPosição = heroizinhoPositionY + 2
+            heroizinho.style.bottom = novaPosição +"px"
+          }
+          if ((funcao == 'd')&&(heroizinhoPositionY>5)){
+            novaPosição = heroizinhoPositionY - 2
+            heroizinho.style.bottom = novaPosição +"px"
+          }
+      
+          if (funcao == 'a'){
+            ataque = true;
+          }
+      
+          if((ataque)&&(tempoAtq<40)){
+              tempoAtq++
+            }
+            else{
+              ataque = false
+              tempoAtq = 0
+            }
+        }
+      
 
 }
 
 setInterval(()=>{
 
-
-    heroizinhoPositionX = getX()
-    heroizinhoPositionY = getY()
     
-    if(((funcao=='l')||(funcao == 'r')||(funcao == 'u')||(funcao == 'd'))&&(funcao != 'a')){
-
-      heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendoPorrete.gif)': heroizinho.style.backgroundImage = 'url(./Gifs/HeroiCorrendo.gif)'
-    }
-    else{
-      heroiComPorrete ? heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParadoPorrete.gif)' : heroizinho.style.backgroundImage = 'url(./Gifs/HeroiParado.gif)'
-    }
-
-    if ((funcao == 'l')&&(heroizinhoPositionX>1)){  
-  
-      novaPosição = heroizinhoPositionX - 2
-      heroizinho.style.left = novaPosição +"px"
-      heroizinho.style.transform = 'scaleX(-1)'
-    }
-    if ((funcao == 'r')&&(heroizinhoPositionX<580)){
-      novaPosição = heroizinhoPositionX + 2
-      heroizinho.style.left = novaPosição +"px"
-      heroizinho.style.transform = 'scaleX(1)'
-    }
-    if ((funcao == 'u')&&(heroizinhoPositionY<170)){      
-      novaPosição = heroizinhoPositionY + 2
-      heroizinho.style.bottom = novaPosição +"px"
-    }
-    if ((funcao == 'd')&&(heroizinhoPositionY>5)){
-      novaPosição = heroizinhoPositionY - 2
-      heroizinho.style.bottom = novaPosição +"px"
-    }
-
-    if (funcao == 'a'){
-      ataque = true;
-    }
-
-    if((ataque)&&(tempoAtq<40)){
-        tempoAtq++
-      }
-      else{
-        ataque = false
-        tempoAtq = 0
-      }
-    
-
+    movimantando()
     atacando()
 
 },10);
@@ -158,5 +173,7 @@ export default {
     getY:getY,
     getAtq:getAtq,
     settHeroiComPorrete:settHeroiComPorrete,
-    gettHeroiComPorrete:gettHeroiComPorrete
+    gettHeroiComPorrete:gettHeroiComPorrete,
+    setPause:setPause,
+    getPause:getPause
 }
