@@ -1,11 +1,12 @@
 import controlesPersonagem from "./heroi.js";
 import movEnimigo from "./comportamentoEnimigo.js";
 import porrete from "./porrete.js";
+import blocosDano from "./blocosDano.js";
 
 let tempo=0
-let jogando
-let pegaHeroi_Z = [false,false,false,false,false,false,false,false,false,false]
-let fazeExecutada = [false,false,false,false,false,false,false,false,false,false]
+let jogando = true
+let pegaHeroi_Z = [false,false,false,false,false]
+let fazeExecutada = [false,false,false,false,false]
 
 const tempoParaAcelerarEnimigo = ()=>{
 
@@ -19,29 +20,87 @@ const tempoParaAcelerarEnimigo = ()=>{
 
 const pegaHeroi = (v_Enimigo,indice)=>{
 
-    if(movEnimigo.getVidaEnimigo() == v_Enimigo){
+    if((movEnimigo.getVidaEnimigo() == v_Enimigo)&&(movEnimigo.getPause())){
         if(!movEnimigo.getAconteceuDano()){
             pegaHeroi_Z[indice]=true
             tempoParaAcelerarEnimigo()
-            movEnimigo.setPause(false)
-            
+            console.log("oii");
         }
         else{
+            movEnimigo.setPause(false)
             tempo = 0
         }
     }
 }
 
 const fases = () =>{
-    if(((movEnimigo.getVidaEnimigo()==90)&&(pegaHeroi_Z[0])&&(!fazeExecutada[0]&&
+    if(((movEnimigo.getVidaEnimigo()==80)&&(pegaHeroi_Z[0])&&(!fazeExecutada[0]&&
         (movEnimigo.getPosicaoInicial())))){
-            // console.log("deu certo");
-    }
+            controlesPersonagem.settHeroiComPorrete(false)
+            blocosDano.setFaseIniciada(true,0)
+            if(blocosDano.getFaseFinalizada(0)){
+                porrete.reaparece()
+                movEnimigo.liberaNovoDanoEnimigo()
+                fazeExecutada[0]=true
+                movEnimigo.setPause(true)
+                console.log("fase1");
+            }
+     }
+
+     if(((movEnimigo.getVidaEnimigo()==60)&&(pegaHeroi_Z[1])&&(!fazeExecutada[1]&&
+        (movEnimigo.getPosicaoInicial())))){
+            controlesPersonagem.settHeroiComPorrete(false)
+            blocosDano.setFaseIniciada(true,1)
+            if(blocosDano.getFaseFinalizada(1)){
+                porrete.reaparece()
+                movEnimigo.setPause(true)
+                movEnimigo.liberaNovoDanoEnimigo()
+                fazeExecutada[1]=true
+                console.log("fase2");
+            }
+     }
+
+     if(((movEnimigo.getVidaEnimigo()==40)&&(pegaHeroi_Z[2])&&(!fazeExecutada[2]&&
+        (movEnimigo.getPosicaoInicial())))){
+            controlesPersonagem.settHeroiComPorrete(false)
+            blocosDano.setFaseIniciada(true,2)
+            if(blocosDano.getFaseFinalizada(2)){
+                porrete.reaparece()
+                movEnimigo.setPause(true)
+                movEnimigo.liberaNovoDanoEnimigo()
+                fazeExecutada[2]=true
+                console.log("fase3");
+            }
+     }
+
+     if(((movEnimigo.getVidaEnimigo()==20)&&(pegaHeroi_Z[3])&&(!fazeExecutada[3]&&
+        (movEnimigo.getPosicaoInicial())))){
+            controlesPersonagem.settHeroiComPorrete(false)
+            blocosDano.setFaseIniciada(true,3)
+            if(blocosDano.getFaseFinalizada(3)){
+                porrete.reaparece()
+                movEnimigo.setPause(true)
+                movEnimigo.liberaNovoDanoEnimigo()
+                fazeExecutada[3]=true
+                console.log("fase4");
+            }
+     }
+
+     if(movEnimigo.getVidaEnimigo()==0){
+                console.log("Acabou");
+            }
+     
+
+
 }
 
 setInterval(()=>{
     if(jogando){
         pegaHeroi(100,0)
+        pegaHeroi(80,1)
+        pegaHeroi(60,2)
+        pegaHeroi(40,3)
+        pegaHeroi(20,4)
         fases()
     }
 
@@ -58,7 +117,6 @@ document.addEventListener('keydown', function(e) {
             break; 
            
         case "p":
-            jogando = true
             movEnimigo.setPause(true)
             break;  
 

@@ -22,8 +22,8 @@ const getPosicaoInicial = () =>{
    return ((getX()==posiX)&&(getY()==posiYini)) ? true : false
 }
 
-const liberaNovoDanoEnimigo = (set)=>{
-    bloqueadoPeloControlador = set
+const liberaNovoDanoEnimigo = ()=>{
+    bloqueadoPeloControlador = false
 }
 const getAconteceuDano = () =>{
     return bloqueadoPeloControlador
@@ -45,15 +45,19 @@ const setDano = (set) =>{
     travaDanoE = set
 }
 
-let setPause = (set)=>{
+const setPause = (set)=>{
     pause = set
+}
+
+const getPause = () =>{
+    return pause
 }
 
 const novoDanoNoEnimigo = ()=>{
 
     if(!bloqueadoPeloControlador){
         if((tempoNovoDanoE==0)&&(travaDanoE)){
-            vidaEnimigo = vidaEnimigo - 10
+            vidaEnimigo = vidaEnimigo - 20
         }
         if(travaDanoE){
                 if(tempoNovoDanoE<80){
@@ -162,6 +166,7 @@ setInterval(()=>{
     mov()
     tomouDano()
     recomeca()
+    
   
 },20);
 
@@ -175,5 +180,6 @@ export default {
     setVelocidade:setVelocidade,
     liberaNovoDanoEnimigo:liberaNovoDanoEnimigo,
     getAconteceuDano:getAconteceuDano,
-    getPosicaoInicial:getPosicaoInicial
+    getPosicaoInicial:getPosicaoInicial,
+    getPause:getPause
 }

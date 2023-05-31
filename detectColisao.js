@@ -5,11 +5,6 @@ import porrete from "./porrete.js";
 
 let comandoAtq
 
-
-const gettravaDanoE = ()=>{
-    return travaDanoE
-}
-
 const ColisaoEnimigo = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 
     if((Math.abs(posiHeroiX - enimigoX) < 42) &&
@@ -108,7 +103,4 @@ setInterval(()=>{
 },10);
 
 
-export default {
-    gettravaDanoE:gettravaDanoE,
-
-}
+export default {}
