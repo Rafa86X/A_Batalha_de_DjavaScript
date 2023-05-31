@@ -2,6 +2,7 @@ import controlesPersonagem from "./heroi.js";
 import movEnimigo from "./comportamentoEnimigo.js";
 import porrete from "./porrete.js";
 import blocosDano from "./blocosDano.js";
+import heroi from "./heroi.js";
 
 let tempo=0
 let jogando = true
@@ -12,6 +13,7 @@ const tempoParaAcelerarEnimigo = ()=>{
 
     if(tempo<2000){
         tempo++
+        movEnimigo.setVelocidade(1)
     }else{
         movEnimigo.setVelocidade(3)
     }
@@ -24,10 +26,10 @@ const pegaHeroi = (v_Enimigo,indice)=>{
         if(!movEnimigo.getAconteceuDano()){
             pegaHeroi_Z[indice]=true
             tempoParaAcelerarEnimigo()
-            console.log("oii");
         }
         else{
             movEnimigo.setPause(false)
+            blocosDano.setDinamica_X(false)
             tempo = 0
         }
     }
@@ -42,8 +44,7 @@ const fases = () =>{
                 porrete.reaparece()
                 movEnimigo.liberaNovoDanoEnimigo()
                 fazeExecutada[0]=true
-                movEnimigo.setPause(true)
-                console.log("fase1");
+                movEnimigo.setPause(true)                
             }
      }
 
@@ -55,8 +56,9 @@ const fases = () =>{
                 porrete.reaparece()
                 movEnimigo.setPause(true)
                 movEnimigo.liberaNovoDanoEnimigo()
+                blocosDano.setDinamica_X(true)
                 fazeExecutada[1]=true
-                console.log("fase2");
+                
             }
      }
 
@@ -68,8 +70,9 @@ const fases = () =>{
                 porrete.reaparece()
                 movEnimigo.setPause(true)
                 movEnimigo.liberaNovoDanoEnimigo()
+                blocosDano.setDinamica_X(true)
                 fazeExecutada[2]=true
-                console.log("fase3");
+               
             }
      }
 
@@ -81,13 +84,14 @@ const fases = () =>{
                 porrete.reaparece()
                 movEnimigo.setPause(true)
                 movEnimigo.liberaNovoDanoEnimigo()
+                blocosDano.setDinamica_X(true)
                 fazeExecutada[3]=true
-                console.log("fase4");
+               
             }
      }
 
-     if(movEnimigo.getVidaEnimigo()==0){
-                console.log("Acabou");
+     if((movEnimigo.getVidaEnimigo()==0)||(heroi.getVidaHeroi()==0)){
+                
             }
      
 

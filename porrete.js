@@ -1,3 +1,5 @@
+import heroi from "./heroi.js"
+
 const porrete = document.getElementById("porrete")
 
 let novaPosição
@@ -15,11 +17,13 @@ const desaparecePorrete = ()=>{
 }
 
 const reaparece = () =>{
+    do{
     porrete.style.visibility = 'visible'
     novaPosição = Math.floor(Math.random() * 480);
     porrete.style.left = novaPosição +"px"
     novaPosição = Math.floor(Math.random() * 70);
-    porrete.style.bottom = novaPosição +"px"
+    porrete.style.bottom = novaPosição +"px"}
+    while((Math.abs(heroi.getX()-getXPorrete()))<100)
 }
 
 

@@ -9,10 +9,20 @@ const blocoCF5 = document.getElementById("blocoCF5")
 const bloco1 = document.getElementById("bloco1")
 const bloco2 = document.getElementById("bloco2")
 const bloco3 = document.getElementById("bloco3")
-const figuraBlocoDano1 = document.getElementById("figuraBlocoDano1")
-const figuraBlocoDano2 = document.getElementById("figuraBlocoDano2")
-const figuraBlocoDano3 = document.getElementById("figuraBlocoDano3")
 
+let ciclo = [false,false,false] 
+let PosiIniFases = [600,150,650,10,625,80]
+let faseIniciada = [false,false,false,false,false]
+let trava = [false,false,false,false,false]
+let faseConcluida = [false,false,false,false,false]
+let posicaoXbloco
+let posicionado = false
+let passo = [false,false,false]
+let espera=0
+let posicaoFormacao = []
+let tempoDinamicaX=0
+let dianmicaX_Ativada = false
+let reposi =false
 
 const getX_blocoCF1 = () =>{
     return parseInt(window.getComputedStyle(blocoCF1).left)
@@ -73,49 +83,23 @@ const getFaseFinalizada = (i) =>{
     return faseConcluida[i]
 }
 
-
-const acompanha = ()=>{
-    let a= 5,b = 10
-
-    figuraBlocoDano1.style.left = (getX_bloco1() - a) +"px"
-    figuraBlocoDano1.style.bottom = (getY_bloco1() - b) +"px"
-    figuraBlocoDano2.style.left = (getX_bloco2() - a) +"px"
-    figuraBlocoDano2.style.bottom = (getY_bloco2() - b) +"px"
-    figuraBlocoDano3.style.left = (getX_bloco3() - a) +"px"
-    figuraBlocoDano3.style.bottom = (getY_bloco3() - b) +"px"
- }
-
-let ciclo = [false,false,false] 
-let PosiIniFases = [600,150,650,10,625,80]
-let faseIniciada = [false,false,false,false,false]
-let trava = [false,false,false,false,false]
-let faseConcluida = [false,false,false,false,false]
-let posicaoXbloco
-let posicionado = false
-let passo = [false,false,false]
-
-const posicaoIniCiclos = () =>{
-
-    bloco1.style.left = PosiIniFases[0] + "px"
-    bloco1.style.bottom = PosiIniFases[1] + "px"
-    bloco2.style.left = PosiIniFases[2] + "px"
-    bloco2.style.bottom = PosiIniFases[3] + "px"
-    bloco3.style.left = PosiIniFases[4] + "px"
-    bloco3.style.bottom = PosiIniFases[5] + "px"
+const setDinamica_X = (set) =>{
+    dianmicaX_Ativada = set
 }
 
 
-const formacao1 =(velocidade)=>{
+
+const formacao =(velocidade,posiforma)=>{
 
     if((!passo[0])&&(!passo[1])&&(!passo[2])){
-        passo[0]=atitudeBloco(0,0,0,0,0,0,500,400,velocidade)
+        passo[0]=atitudeBloco(0,0,0,0,0,0,posiforma[0],posiforma[1],posiforma[2],velocidade)
                
     }
     if((passo[0])&&(!passo[1])&&(!passo[2])){
-        passo[1]=atitudeBloco(0,0,0,-10,10,0,650,650,velocidade) 
+        passo[1]=atitudeBloco(0,0,0,-10,10,0,posiforma[3],posiforma[4],posiforma[5],velocidade) 
     }
     if((passo[0])&&(passo[1])&&(!passo[2])){
-        passo[2]=atitudeBloco(0,0,0,0,-15,20,500,400,velocidade)        
+        passo[2]=atitudeBloco(0,0,0,0,0,0,posiforma[6],posiforma[7],posiforma[8],velocidade)        
     }
     if((passo[0])&&(passo[1])&&(passo[2])){
         return true        
@@ -126,31 +110,7 @@ const formacao1 =(velocidade)=>{
 
 }
 
-
-const formacao2 =(velocidade)=>{
-
-    if((!passo[0])&&(!passo[1])&&(!passo[2])){
-        passo[0]=atitudeBloco(0,0,0,0,0,0,500,400,velocidade)
-               
-    }
-    if((passo[0])&&(!passo[1])&&(!passo[2])){
-        passo[1]=atitudeBloco(0,0,0,-10,10,0,650,650,velocidade) 
-    }
-    if((passo[0])&&(passo[1])&&(!passo[2])){
-        passo[2]=atitudeBloco(0,0,0,0,-15,20,500,200,velocidade)        
-    }
-    if((passo[0])&&(passo[1])&&(passo[2])){
-        return true        
-    }
-    else{
-        return false
-    }   
-
-}
-
-
-
-const atitudeBloco = (posiX1,posiX2,posiX3,posiY1,posiY2,posiY3,referencia1,referencia2,velocidade) =>{
+const atitudeBloco = (posiX1,posiX2,posiX3,posiY1,posiY2,posiY3,referencia1,referencia2,referencia3,velocidade) =>{
 
     if(!posicionado){
         bloco1.style.left = (PosiIniFases[0]+posiX1) + "px"
@@ -159,17 +119,19 @@ const atitudeBloco = (posiX1,posiX2,posiX3,posiY1,posiY2,posiY3,referencia1,refe
         bloco2.style.bottom = (PosiIniFases[3]+posiY2) + "px"
         bloco3.style.left = (PosiIniFases[4]+posiX3) + "px"
         bloco3.style.bottom = (PosiIniFases[5]+posiY3) + "px"
+        espera=0
         posicionado = true
     }
-    if(getX_bloco1()>-100){
+    espera++
+    if((getX_bloco1()>-100)&&(espera>referencia1)){
         bloco1.style.left = (getX_bloco1() - velocidade ) + "px"
     }
 
-    if((getX_bloco3()>-100)&&(getX_bloco1()<referencia1)){
+    if((getX_bloco3()>-100)&&(espera>referencia2)){
         bloco3.style.left = (getX_bloco3() - velocidade ) + "px"
     }
 
-    if((getX_bloco2()>-100)&&(getX_bloco1()<referencia2)){
+    if((getX_bloco2()>-100)&&(espera>referencia3)){
         bloco2.style.left = (getX_bloco2() - velocidade ) + "px"
     }
     if((getX_bloco1()<=-100)&&(getX_bloco2()<=-100)&&(getX_bloco3()<=-100)){
@@ -182,9 +144,10 @@ const atitudeBloco = (posiX1,posiX2,posiX3,posiY1,posiY2,posiY3,referencia1,refe
 
 }
 
-const movimentaBloco1 = (bloco,velocidade, cicloX,cicloIndice)=>{
+const movimentaBloco = (altura,bloco,velocidade, cicloX,cicloIndice)=>{
+      
          posicaoXbloco = parseInt(window.getComputedStyle(bloco).left)
- 
+         bloco.style.bottom = altura + "px"
          if(posicaoXbloco >=550)
          cicloX= true
          if(posicaoXbloco <= 20)
@@ -192,17 +155,53 @@ const movimentaBloco1 = (bloco,velocidade, cicloX,cicloIndice)=>{
 
         if((cicloX==false)&&(posicaoXbloco<550))
         {
-            c
+            bloco.style.left = (posicaoXbloco + velocidade) + "px"
         }       
         if(cicloX==true)
         {
             bloco.style.left = (posicaoXbloco - velocidade) + "px"
         }
         ciclo[cicloIndice] = cicloX
+
    
 }
 
-const dinamica1 = (velocidade,i) =>{
+
+const dinamica_X = ()=>{
+
+    if(dianmicaX_Ativada){
+        reposi = false
+        if(tempoDinamicaX<2){
+            bloco1.style.left = (PosiIniFases[0]) + "px"
+            bloco1.style.bottom = (PosiIniFases[1]) + "px"
+            bloco2.style.left = (PosiIniFases[2]) + "px"
+            bloco2.style.bottom = (PosiIniFases[3]) + "px"
+            bloco3.style.left = (PosiIniFases[4]) + "px"
+            bloco3.style.bottom = (PosiIniFases[5]) + "px"
+        }
+        movimentaBloco(80,bloco3,2,ciclo[2],2)
+        movimentaBloco(10,bloco2,3,ciclo[1],1)
+        movimentaBloco(150,bloco1,4,ciclo[0],0)
+
+        if(tempoDinamicaX<=10){
+            tempoDinamicaX++
+        }
+    }
+    else{
+        if(reposi==false){
+            bloco1.style.left = 800 + "px"
+            bloco1.style.bottom = 800 + "px"
+            bloco2.style.left = 800 + "px"
+            bloco2.style.bottom = 800 + "px"
+            bloco3.style.left = 800 + "px"
+            bloco3.style.bottom = 800 + "px"
+            reposi = true
+        }
+    }
+
+}
+
+const dinamica = (numeroDim,velocidade,i) =>{
    
     if((faseIniciada[i])&&(!trava[i])){
         posicionado = false
@@ -210,27 +209,30 @@ const dinamica1 = (velocidade,i) =>{
         trava[i]=true
     }
     if((trava[i])&&(!faseConcluida[i])){
-        faseConcluida[i] = formacao1(velocidade)       
+        faseConcluida[i] = dinamica_X();
+        if(numeroDim==1){
+            posicaoFormacao = [10,30,40,10,30,10,40,20,0]
+        }
+        if(numeroDim==2){
+            posicaoFormacao = [40,20,0,20,0,20,20,0,40]
+        }
+        if(numeroDim==3){
+            posicaoFormacao = [60,0,30,0,20,40,10,30,50]
+        }
+        faseConcluida[i] = formacao(velocidade,posicaoFormacao)          
     }
 }
 
+
 setInterval(()=>{
-    
-    // movimentaBloco1(bloco1,4,ciclo[0],0)
-    // movimentaBloco1(bloco2,3,ciclo[1],1)
-    //movimentaBloco1(bloco3,2,ciclo[2],2)
-    acompanha()
 
-    dinamica1(5,0)
-    dinamica1(7,1)
-    dinamica1(9,2)
-    dinamica1(11,3)
-    dinamica1(13,4)
-
-
-
-  
- },30);
+    // dinamica(1,5,0)
+    // dinamica(2,9,1)
+    // dinamica(3,11,2)
+    // dinamica(1,13,3)
+    // dinamica(2,13,4)
+    // dinamica_X()
+   },30);
 
 
 
@@ -244,5 +246,6 @@ export default{
     getX_bloco2:getX_bloco2, getY_bloco2:getY_bloco2,
     getX_bloco3:getX_bloco3, getY_bloco3:getY_bloco3,
     setFaseIniciada:setFaseIniciada,
-    getFaseFinalizada:getFaseFinalizada
+    getFaseFinalizada:getFaseFinalizada,
+    setDinamica_X:setDinamica_X
 }

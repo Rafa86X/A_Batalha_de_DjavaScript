@@ -31,7 +31,7 @@ const blocoColisaoDano = (posiHeroiX,posiHeroiY,enimigoX,enimigoY)=>{
 
 
     if((Math.abs(posiHeroiX + 40 - enimigoX - 3)  < 50) &&
-    ((Math.abs(posiHeroiY - enimigoY - 3) < 20)))
+    ((Math.abs(posiHeroiY - enimigoY - 3) < 17)))
     {
         controlesPersonagem.setDano(true)
     }

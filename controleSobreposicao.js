@@ -9,7 +9,7 @@ let lista = principal.getElementsByTagName("div")
 let principal2 = document.getElementsByClassName("arena2")[0]
 let lista2 = principal2.getElementsByTagName("div")
 
-const figuraBlocoDano3 = document.getElementById("figuraBlocoDano3")
+const figuraBlocoDano3 = document.getElementById("bloco3")
 const heroizinho = document.getElementById("heoizinho")
 
 
