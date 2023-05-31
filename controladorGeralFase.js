@@ -14,7 +14,6 @@ const tempoParaAcelerarEnimigo = ()=>{
     if(heroi.getPause()){
         if(tempo<2000){
             tempo++
-            console.log(tempo);
             }
         else{
             movEnimigo.setVelocidade(3)
@@ -94,10 +93,21 @@ const fases = () =>{
             }
      }
 
-     if((movEnimigo.getVidaEnimigo()==0)||(heroi.getVidaHeroi()==0)){
-                
+     if((movEnimigo.getVidaEnimigo()<=0)||(heroi.getVidaHeroi()<=0)){
+            heroi.setPause(false)
+            blocosDano.setPause(false)
+            movEnimigo.setVelocidade(0)
+
+            if(movEnimigo.getVidaEnimigo()<=0){
+                document.getElementById("painelIni").style.backgroundImage = 'url(./Imagens/painelVenceu.png)'
+                heroi.venceu()
             }
-     
+            if(heroi.getVidaHeroi()<=0){
+                document.getElementById("painelIni").style.backgroundImage = 'url(./Imagens/painelMorreu.png)'
+            }
+            document.getElementById("painelIni").style.visibility = 'visible'
+            }
+    
 
 
 }

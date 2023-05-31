@@ -13,6 +13,7 @@ let ataque = false
 let tempoAtq = 0
 let heroiComPorrete = false
 let pause = false
+let heroiVenceu = false
 
 const setPause=(set)=>{
   pause = set
@@ -48,16 +49,29 @@ const getAtq = ()=>{
 
 const atacando = ()=>{
 
-  if((ataque)&&(heroiComPorrete)&&(pause)){
+  if((ataque)&&(heroiComPorrete)&&(pause)&&(vidaHeroi>0)&&(!heroiVenceu)){
     heroizinho.style.backgroundImage = 'url(./Gifs/HeroiAtacando.gif)'
   }
 
 }
 
+const heroiMorreu = () =>{
+
+      if(vidaHeroi<=0){
+        heroizinho.style.visibility = 'visible';
+        heroizinho.style.backgroundImage = 'url(./Gifs/morreu.gif)'
+      }
+}
+
+const venceu = () => {
+    heroiVenceu = true
+    heroizinho.style.backgroundImage = 'url(./Gifs/heroiVenceu.gif)'
+}
+
 const novoDanoNoHeroi = ()=>{
 
-  if(pause){
-    if((tempoNovoDanoH==0)&&(travaDanoH)){
+  if((pause)&&(vidaHeroi>0)&&(!heroiVenceu)){
+    if((tempoNovoDanoH==0)&&(travaDanoH)&&(vidaHeroi>0)){
         vidaHeroi = vidaHeroi - 10
     }
   
@@ -79,7 +93,7 @@ const novoDanoNoHeroi = ()=>{
 
 const movimantando = () =>{
 
-      if(pause){
+      if((pause)&&(vidaHeroi>0)&&(!heroiVenceu)){
           heroizinhoPositionX = getX()
           heroizinhoPositionY = getY()
           
@@ -129,7 +143,7 @@ const movimantando = () =>{
 
 setInterval(()=>{
 
-    
+    heroiMorreu()
     movimantando()
     atacando()
 
@@ -175,5 +189,6 @@ export default {
     settHeroiComPorrete:settHeroiComPorrete,
     gettHeroiComPorrete:gettHeroiComPorrete,
     setPause:setPause,
-    getPause:getPause
+    getPause:getPause,
+    venceu:venceu
 }

@@ -67,7 +67,7 @@ const setVelocidade = (set) =>{
 const novoDanoNoEnimigo = ()=>{
 
     if(!bloqueadoPeloControlador){
-        if((tempoNovoDanoE==0)&&(travaDanoE)){
+        if((tempoNovoDanoE==0)&&(travaDanoE)&&(vidaEnimigo>0)){
             vidaEnimigo = vidaEnimigo - 20
         }
         if(travaDanoE){
@@ -157,14 +157,17 @@ const corregedorDeEscala = () =>{
 
     const animacao = () =>{
 
-        if(ativado){
-            if(velocidade>1)
-                enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendoRapido.gif)'
+        if(vidaEnimigo>0){
+            if(ativado){
+                if(velocidade>1)
+                    enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendoRapido.gif)'
+                else
+                    enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendo.gif)'
+            }
             else
-                enimigo.style.backgroundImage = 'url(./Gifs/enimigoCorrendo.gif)'
+                enimigo.style.backgroundImage = 'url(./Gifs/enimigoParado.gif)'
         }
-        else
-            enimigo.style.backgroundImage = 'url(./Gifs/enimigoParado.gif)'
+        else{enimigo.style.visibility = 'hidden';}
         
     }
 
