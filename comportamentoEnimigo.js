@@ -107,14 +107,14 @@ const tomouDano =()=>{
     }
 
     if(fugindo){
-        velocidade = (alvoX - posiX < 10) ? velocidade = 1 : velocidade = velo_setada*3
+        velocidade = (alvoX - posiX < 10) ? velocidade = velo_setada : velocidade = velo_setada*3
         alvoX = posiXini
         alvoY = posiYini
 
     }else{
         alvoX = controlesPersonagem.getX()
         alvoY = controlesPersonagem.getY()
-        velocidade = velo_setada
+        velocidade = velo_setada 
     }
 
 }
@@ -123,6 +123,7 @@ const tomouDano =()=>{
 
 const mov = () =>{
     if(ativado){
+        
         if(alvoX < posiX){
             novaPosição = posiX - velocidade
             enimigo.style.left = novaPosição +"px"
@@ -176,7 +177,6 @@ setInterval(()=>{
     mov()
     tomouDano()
     recomeca()
-    
   
 },20);
 

@@ -36,6 +36,17 @@ body{
     margin-left: 5px;
 }
 
+.painelIni{
+    position: absolute;
+    background-image: url("./Imagens/painelInicial.png");
+    background-repeat: no-repeat;
+    background-size:100%;
+    width: 600px;
+    height: 365px;
+    bottom: 340px;
+    left: 115px;
+}
+
 #porrete{
     background: url("./Gifs/Porrete.gif");
     background-repeat: no-repeat;

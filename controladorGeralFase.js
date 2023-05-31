@@ -11,14 +11,17 @@ let fazeExecutada = [false,false,false,false,false]
 
 const tempoParaAcelerarEnimigo = ()=>{
 
-    if(tempo<2000){
-        tempo++
-        movEnimigo.setVelocidade(1)
-    }else{
-        movEnimigo.setVelocidade(3)
+    if(heroi.getPause()){
+        if(tempo<2000){
+            tempo++
+            console.log(tempo);
+            }
+        else{
+            movEnimigo.setVelocidade(3)
+            }
     }
+ }
 
-}
 
 const pegaHeroi = (v_Enimigo,indice)=>{
 
@@ -31,6 +34,7 @@ const pegaHeroi = (v_Enimigo,indice)=>{
             movEnimigo.setPause(false)
             blocosDano.setDinamica_X(false)
             tempo = 0
+            movEnimigo.setVelocidade(1)
         }
     }
 }
@@ -111,6 +115,24 @@ setInterval(()=>{
 },10);
 
 
+const f_iniPause = () =>{
+    if((movEnimigo.getVidaEnimigo()>0)&&(heroi.getVidaHeroi()>0)){
+        if(heroi.getPause()==false){
+            movEnimigo.iniGeral()
+            heroi.setPause(true)
+            blocosDano.setPause(true)
+            movEnimigo.setVelocidade(1)
+            document.getElementById("painelIni").style.visibility = 'hidden'
+        }
+        else{
+            heroi.setPause(false)
+            blocosDano.setPause(false)
+            movEnimigo.setVelocidade(0)
+            document.getElementById("painelIni").style.visibility = 'visible'  
+        }                
+    }
+}
+
 document.addEventListener('keydown', function(e) {
     const key = e.key;
     
@@ -121,17 +143,7 @@ document.addEventListener('keydown', function(e) {
             break; 
            
         case "p":
-            if(heroi.getPause()==false){
-                movEnimigo.iniGeral()
-                heroi.setPause(true)
-                blocosDano.setPause(true)
-                movEnimigo.setVelocidade(1)
-            }
-            else{
-                heroi.setPause(false)
-                blocosDano.setPause(false)
-                movEnimigo.setVelocidade(0)   
-            }
+            f_iniPause()
             break;  
 
         case "i":
